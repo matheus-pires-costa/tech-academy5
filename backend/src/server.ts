@@ -1,17 +1,14 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import usuarioRoutes from './routes/usuarioRoutes';
 
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // Permite o Node entender JSON
+app.use(express.json());
 
-// Rota de teste
-app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({ message: 'API da CN Estética rodando perfeitamente! 🚀' });
-});
+app.use('/usuarios', usuarioRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT} - Vamo pra cima!`);
+app.listen(3000, () => {
+  console.log('Servidor rodando na porta 3000 - Jarvis online!');
 });
