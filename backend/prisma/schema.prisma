@@ -1,0 +1,38 @@
+// Tabela de Usuários (Para o Login exigido na rubrica)
+model Usuario {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  email String @unique
+  senha String
+  cpf   String @unique
+}
+
+// CRUD 1: Clientes
+model Cliente {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  telefone     String
+  endereco     String?
+  agendamentos Agendamento[]
+}
+
+// CRUD 2: Procedimentos
+model Procedimento {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  descricao    String?
+  preco        Float
+  agendamentos Agendamento[]
+}
+
+// CRUD 3: Agendamentos (Relacionamento obrigatório da rubrica)
+model Agendamento {
+  id             Int          @id @default(autoincrement())
+  data           DateTime
+  status         String       @default("Pendente")
+  clienteId      Int
+  procedimentoId Int
+
+  cliente        Cliente      @relation(fields: [clienteId], references: [id])
+  procedimento   Procedimento @relation(fields: [procedimentoId], references: [id])
+}
