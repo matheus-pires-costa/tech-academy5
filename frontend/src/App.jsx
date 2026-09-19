@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { AuthProvider, AuthContext } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import ClientesLista from './pages/ClientesLista';
 import ClienteForm from './pages/ClienteForm';
@@ -8,28 +9,23 @@ import ProcedimentoForm from './pages/ProcedimentoForm';
 import AgendamentosLista from './pages/AgendamentosLista';
 import AgendamentoForm from './pages/AgendamentoForm';
 import Cadastro from './pages/Cadastro';
+import { useState } from 'react';
 
-function App() {
-  const [logado, setLogado] = useState(false);
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) setLogado(true);
-  }, []);
+// O componente de rotas agora consome o contexto global
+function Rotas() {
+  const { logado } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
       {logado && <Navbar />}
       <Routes>
-        {/* Rotas Públicas */}
         {!logado ? (
           <>
-            <Route path="/" element={<TelaLogin setLogado={setLogado} />} />
+            <Route path="/" element={<TelaLogin />} />
             <Route path="/cadastro" element={<Cadastro />} />
-            {/* Redireciona qualquer outra rota para o Login se não estiver logado */}
             <Route path="*" element={<Navigate to="/" />} />
           </>
         ) : (
-          /* Rotas Privadas (Só acessíveis se logado) */
           <>
             <Route path="/" element={<Navigate to="/clientes" />} />
             <Route path="/clientes" element={<ClientesLista />} />
@@ -41,7 +37,6 @@ function App() {
             <Route path="/agendamentos" element={<AgendamentosLista />} />
             <Route path="/agendamentos/novo" element={<AgendamentoForm />} />
             <Route path="/agendamentos/editar/:id" element={<AgendamentoForm />} />
-            {/* Se o utilizador logado tentar aceder ao /cadastro, é reencaminhado */}
             <Route path="/cadastro" element={<Navigate to="/clientes" />} />
           </>
         )}
@@ -50,11 +45,11 @@ function App() {
   );
 }
 
-// Componente de Login separado para manter o código organizado
-function TelaLogin({ setLogado }) {
+function TelaLogin() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
+  const { login } = useContext(AuthContext); // Traz a função de login do contexto
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -67,8 +62,8 @@ function TelaLogin({ setLogado }) {
       });
       const dados = await resposta.json();
       if (resposta.ok) {
-        localStorage.setItem('token', dados.token);
-        setLogado(true);
+        // Agora passamos o token e os dados do utilizador para o contexto global
+        login(dados.token, dados.usuario || { nome: 'Administrador' }); 
       } else {
         setErro(dados.erro || 'Credenciais inválidas');
       }
@@ -99,4 +94,11 @@ function TelaLogin({ setLogado }) {
   );
 }
 
-export default App;
+// O App principal apenas embrulha a aplicação no provedor de contexto
+export default function App() {
+  return (
+    <AuthProvider>
+      <Rotas />
+    </AuthProvider>
+  );
+}
