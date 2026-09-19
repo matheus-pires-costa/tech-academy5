@@ -1,6 +1,9 @@
-export interface CadastroUsuarioDTO {
+export type ClienteDTO = {
   nome: string;
-  email: string;
-  senha: string;
-  cpf: string;
-}
+  telefone: string;
+};
+
+export type ClienteUpdateDTO = {
+  nome?: string;
+  telefone?: string;
+};

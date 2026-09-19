@@ -1,44 +1,41 @@
 import { Request, Response } from 'express';
 import { ClienteService } from '../services/ClienteService';
+import { tratarErro } from '../utils/erroHelper';
 
-const clienteService = new ClienteService();
+const service = new ClienteService();
 
 export class ClienteController {
   async criar(req: Request, res: Response): Promise<void> {
     try {
-      const cliente = await clienteService.criar(req.body);
+      const cliente = await service.criar(req.body);
       res.status(201).json(cliente);
-    } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : 'Erro ao criar cliente';
-      res.status(400).json({ erro: msg });
+    } catch (e) {
+      tratarErro(e as Error, res);
     }
   }
 
   async listar(req: Request, res: Response): Promise<void> {
-    const clientes = await clienteService.listar();
+    const pagina = Number(req.query.pagina) || 1;
+    const limite = Number(req.query.limite) || 10;
+    const clientes = await service.listar(pagina, limite);
     res.status(200).json(clientes);
   }
 
-  // NOVO MÉTODO: CONTROLADOR DE ATUALIZAÇÃO
   async atualizar(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params; // Pega o ID da URL
-      const clienteAtalizado = await clienteService.atualizar(Number(id), req.body);
-      res.status(200).json(clienteAtalizado);
-    } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : 'Erro ao atualizar cliente';
-      res.status(400).json({ erro: msg });
+      const cliente = await service.atualizar(Number(req.params.id), req.body);
+      res.status(200).json(cliente);
+    } catch (e) {
+      tratarErro(e as Error, res);
     }
   }
 
   async deletar(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
-      await clienteService.deletar(Number(id));
-      res.status(204).send(); // 204 significa "Sucesso, sem conteúdo de retorno"
-    } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : 'Erro ao deletar cliente';
-      res.status(400).json({ erro: msg });
+      await service.deletar(Number(req.params.id));
+      res.status(204).send();
+    } catch (e) {
+      tratarErro(e as Error, res);
     }
   }
 }
