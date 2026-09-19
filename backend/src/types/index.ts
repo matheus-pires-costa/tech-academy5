@@ -15,4 +15,13 @@ export type ProcedimentoDTO = {
   duracao: number;
 };
 
+export type AgendamentoDTO = {
+  dataHora: string; // Vamos usar string para facilitar no frontend (formato ISO)
+  status?: string;
+  clienteId: number;
+  procedimentoId: number;
+};
+
+export type AgendamentoUpdateDTO = Partial<AgendamentoDTO>;
+
 export type ProcedimentoUpdateDTO = Partial<ProcedimentoDTO>;

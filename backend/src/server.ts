@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes';
 import procedimentoRoutes from './routes/procedimentoRoutes';
 import agendamentoRoutes from './routes/agendamentoRoutes'; 
 
+
 const app = express();
 
 app.use(cors());

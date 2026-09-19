@@ -26,6 +26,9 @@ function Navbar() {
         <button className="btn btn-outline-light btn-sm me-2" onClick={() => navigate('/procedimentos')}>
           💉 Procedimentos
         </button>
+        <button className="btn btn-outline-light btn-sm me-2" onClick={() => navigate('/agendamentos')}>
+          📅 Agendamentos
+        </button>
         <button 
           className="btn btn-outline-danger btn-sm" 
           onClick={handleLogout}

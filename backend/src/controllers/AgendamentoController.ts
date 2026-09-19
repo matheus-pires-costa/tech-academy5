@@ -1,19 +1,28 @@
 import { Request, Response } from 'express';
 import { AgendamentoService } from '../services/AgendamentoService';
+import { tratarErro } from '../utils/erroHelper';
 
-const agendamentoService = new AgendamentoService();
+const service = new AgendamentoService();
 
 export class AgendamentoController {
   async criar(req: Request, res: Response): Promise<void> {
-    try {
-      const agendamento = await agendamentoService.criar(req.body);
-      res.status(201).json(agendamento);
-    } catch (e: unknown) {
-      res.status(400).json({ erro: e instanceof Error ? e.message : 'Erro' });
-    }
+    try { res.status(201).json(await service.criar(req.body)); } 
+    catch (e) { tratarErro(e as Error, res); }
   }
 
   async listar(req: Request, res: Response): Promise<void> {
-    res.status(200).json(await agendamentoService.listar());
+    const pagina = Number(req.query.pagina) || 1;
+    const limite = Number(req.query.limite) || 10;
+    res.status(200).json(await service.listar(pagina, limite));
+  }
+
+  async atualizar(req: Request, res: Response): Promise<void> {
+    try { res.status(200).json(await service.atualizar(Number(req.params.id), req.body)); } 
+    catch (e) { tratarErro(e as Error, res); }
+  }
+
+  async deletar(req: Request, res: Response): Promise<void> {
+    try { await service.deletar(Number(req.params.id)); res.status(204).send(); } 
+    catch (e) { tratarErro(e as Error, res); }
   }
 }

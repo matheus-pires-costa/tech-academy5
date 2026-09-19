@@ -5,6 +5,8 @@ import ClientesLista from './pages/ClientesLista';
 import ClienteForm from './pages/ClienteForm';
 import ProcedimentosLista from './pages/ProcedimentosLista';
 import ProcedimentoForm from './pages/ProcedimentoForm';
+import AgendamentosLista from './pages/AgendamentosLista';
+import AgendamentoForm from './pages/AgendamentoForm';
 
 function App() {
   const [logado, setLogado] = useState(false);
@@ -71,6 +73,9 @@ function App() {
         <Route path="/procedimentos" element={<ProcedimentosLista />} />
         <Route path="/procedimentos/novo" element={<ProcedimentoForm />} />
         <Route path="/procedimentos/editar/:id" element={<ProcedimentoForm />} />
+        <Route path="/agendamentos" element={<AgendamentosLista />} />
+        <Route path="/agendamentos/novo" element={<AgendamentoForm />} />
+        <Route path="/agendamentos/editar/:id" element={<AgendamentoForm />} />
       </Routes>
     </BrowserRouter>
   );
