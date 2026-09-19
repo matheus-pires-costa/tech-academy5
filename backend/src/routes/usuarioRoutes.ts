@@ -2,8 +2,9 @@ import { Router } from 'express';
 import { UsuarioController } from '../controllers/UsuarioController';
 
 const router = Router();
-const usuarioController = new UsuarioController();
+const controller = new UsuarioController();
 
-router.post('/cadastro', usuarioController.cadastrar.bind(usuarioController));
+// POST /usuarios/cadastrar
+router.post('/cadastrar', controller.cadastrar.bind(controller));
 
 export default router;

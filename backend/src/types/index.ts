@@ -22,6 +22,13 @@ export type AgendamentoDTO = {
   procedimentoId: number;
 };
 
+export type UsuarioDTO = {
+  nome: string;
+  email: string;
+  senha: string;
+  cpf: string;
+};
+
 export type AgendamentoUpdateDTO = Partial<AgendamentoDTO>;
 
 export type ProcedimentoUpdateDTO = Partial<ProcedimentoDTO>;

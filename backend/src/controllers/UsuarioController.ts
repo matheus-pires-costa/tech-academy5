@@ -1,16 +1,20 @@
 import { Request, Response } from 'express';
 import { UsuarioService } from '../services/UsuarioService';
+import { tratarErro } from '../utils/erroHelper';
 
-const usuarioService = new UsuarioService();
+const service = new UsuarioService();
 
 export class UsuarioController {
   async cadastrar(req: Request, res: Response): Promise<void> {
     try {
-      const usuario = await usuarioService.cadastrar(req.body);
-      res.status(201).json({ message: 'Criado com sucesso', id: usuario.id });
-    } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : 'Erro interno';
-      res.status(400).json({ erro: msg });
+      const usuario = await service.cadastrar(req.body);
+      
+      // Remove a senha criptografada do retorno por segurança
+      const { senha, ...usuarioSemSenha } = usuario;
+      
+      res.status(201).json(usuarioSemSenha);
+    } catch (e) {
+      tratarErro(e as Error, res);
     }
   }
 }
