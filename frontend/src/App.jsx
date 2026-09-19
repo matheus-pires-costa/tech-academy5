@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ClientesLista from './pages/ClientesLista';
 import ClienteForm from './pages/ClienteForm';
+import ProcedimentosLista from './pages/ProcedimentosLista';
+import ProcedimentoForm from './pages/ProcedimentoForm';
 
 function App() {
   const [logado, setLogado] = useState(false);
@@ -66,6 +68,9 @@ function App() {
         <Route path="/clientes" element={<ClientesLista />} />
         <Route path="/clientes/novo" element={<ClienteForm />} />
         <Route path="/clientes/editar/:id" element={<ClienteForm />} />
+        <Route path="/procedimentos" element={<ProcedimentosLista />} />
+        <Route path="/procedimentos/novo" element={<ProcedimentoForm />} />
+        <Route path="/procedimentos/editar/:id" element={<ProcedimentoForm />} />
       </Routes>
     </BrowserRouter>
   );

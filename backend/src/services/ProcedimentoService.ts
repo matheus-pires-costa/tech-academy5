@@ -1,14 +1,28 @@
 import { PrismaClient } from '@prisma/client';
+import { ProcedimentoDTO, ProcedimentoUpdateDTO } from '../types';
 
 const prisma = new PrismaClient();
 
 export class ProcedimentoService {
-  async criar(dados: { nome: string; preco: number; descricao?: string }) {
-    if (!dados.nome || dados.preco === undefined) throw new Error('Nome e preço obrigatórios');
+  async criar(dados: ProcedimentoDTO) {
+    if (!dados.nome || !dados.preco) throw new Error('Nome e preço obrigatórios');
     return await prisma.procedimento.create({ data: dados });
   }
-
-  async listar() {
-    return await prisma.procedimento.findMany();
+  async listar(pagina: number, limite: number) {
+    const pular = (pagina - 1) * limite;
+    return await prisma.procedimento.findMany({ skip: pular, take: limite });
+  }
+  async buscarId(id: number) {
+    const proc = await prisma.procedimento.findUnique({ where: { id } });
+    if (!proc) throw new Error('Procedimento não encontrado');
+    return proc;
+  }
+  async atualizar(id: number, dados: ProcedimentoUpdateDTO) {
+    await this.buscarId(id);
+    return await prisma.procedimento.update({ where: { id }, data: dados });
+  }
+  async deletar(id: number) {
+    await this.buscarId(id);
+    return await prisma.procedimento.delete({ where: { id } });
   }
 }

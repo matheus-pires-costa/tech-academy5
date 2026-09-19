@@ -22,6 +22,10 @@ function Navbar() {
         >
           👥 Clientes
         </button>
+
+        <button className="btn btn-outline-light btn-sm me-2" onClick={() => navigate('/procedimentos')}>
+          💉 Procedimentos
+        </button>
         <button 
           className="btn btn-outline-danger btn-sm" 
           onClick={handleLogout}
