@@ -10,9 +10,10 @@ export class ProcedimentoController {
     catch (e) { tratarErro(e as Error, res); }
   }
   async listar(req: Request, res: Response): Promise<void> {
-    const pagina = Number(req.query.pagina) || 1;
-    const limite = Number(req.query.limite) || 10;
-    res.status(200).json(await service.listar(pagina, limite));
+    try {
+      const [pagina, limite] = [Number(req.query.pagina) || 1, Number(req.query.limite) || 10];
+      res.status(200).json(await service.listar(pagina, limite));
+    } catch (e) { tratarErro(e as Error, res); }
   }
   async atualizar(req: Request, res: Response): Promise<void> {
     try { res.status(200).json(await service.atualizar(Number(req.params.id), req.body)); } 

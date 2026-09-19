@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function ClientesLista() {
   const [clientes, setClientes] = useState([]);
   const [pagina, setPagina] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(1); // Novo estado para saber quando bloquear o botão Próxima
   const limite = 5; // Mostra 5 clientes por página
   const navigate = useNavigate();
 
@@ -14,12 +15,13 @@ function ClientesLista() {
   const carregarClientes = async () => {
     const token = localStorage.getItem('token');
     try {
-      // Repare nos parâmetros de paginação sendo enviados para o backend!
       const resposta = await fetch(`http://localhost:3000/clientes?pagina=${pagina}&limite=${limite}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (resposta.ok) {
-        setClientes(await resposta.json());
+        const resultado = await resposta.json();
+        setClientes(resultado.dados); // AQUI: Agora pegamos o array de clientes de dentro do objeto
+        setTotalPaginas(resultado.paginas); // AQUI: Guardamos o total de páginas
       } else if (resposta.status === 401) {
         navigate('/');
       }
@@ -57,7 +59,6 @@ function ClientesLista() {
                 <tr key={c.id} className='align-middle'>
                   <td className="fw-bold">{c.id}</td><td>{c.nome}</td><td>{c.telefone}</td>
                   <td className="text-center">
-                      {/* Ao clicar em editar, passamos os dados do cliente pela rota! */}
                       <button className="btn btn-sm btn-outline-secondary me-2 border-0" onClick={() => navigate(`/clientes/editar/${c.id}`, { state: { cliente: c } })}>✏️ Editar</button>
                       <button className="btn btn-sm btn-outline-danger border-0" onClick={() => handleDeletar(c.id)}>🗑️ Excluir</button>
                   </td>
@@ -67,13 +68,13 @@ function ClientesLista() {
           </table>
         )}
         
-        {/* Controles de Paginação */}
+        {/* Controles de Paginação ajustados para usar o totalPaginas */}
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button className="btn btn-sm btn-outline-secondary" disabled={pagina === 1} onClick={() => setPagina(pagina - 1)}>
             ⬅️ Anterior
           </button>
-          <span className="text-cn-roxo fw-bold">Página {pagina}</span>
-          <button className="btn btn-sm btn-outline-secondary" disabled={clientes.length < limite} onClick={() => setPagina(pagina + 1)}>
+          <span className="text-cn-roxo fw-bold">Página {pagina} de {totalPaginas}</span>
+          <button className="btn btn-sm btn-outline-secondary" disabled={pagina >= totalPaginas} onClick={() => setPagina(pagina + 1)}>
             Próxima ➡️
           </button>
         </div>

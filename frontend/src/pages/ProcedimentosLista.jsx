@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function ProcedimentosLista() {
   const [procedimentos, setProcedimentos] = useState([]);
   const [pagina, setPagina] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(1); // Novo estado
   const limite = 5;
   const navigate = useNavigate();
 
@@ -18,7 +19,9 @@ function ProcedimentosLista() {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (resposta.ok) {
-        setProcedimentos(await resposta.json());
+        const resultado = await resposta.json();
+        setProcedimentos(resultado.dados); // Pegando o array de dentro do objeto
+        setTotalPaginas(resultado.paginas); // Guardando o total de páginas
       } else if (resposta.status === 401) {
         navigate('/');
       }
@@ -70,8 +73,8 @@ function ProcedimentosLista() {
         
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button className="btn btn-sm btn-outline-secondary" disabled={pagina === 1} onClick={() => setPagina(pagina - 1)}>⬅️ Anterior</button>
-          <span className="text-cn-roxo fw-bold">Página {pagina}</span>
-          <button className="btn btn-sm btn-outline-secondary" disabled={procedimentos.length < limite} onClick={() => setPagina(pagina + 1)}>Próxima ➡️</button>
+          <span className="text-cn-roxo fw-bold">Página {pagina} de {totalPaginas}</span>
+          <button className="btn btn-sm btn-outline-secondary" disabled={pagina >= totalPaginas} onClick={() => setPagina(pagina + 1)}>Próxima ➡️</button>
         </div>
       </div>
     </div>

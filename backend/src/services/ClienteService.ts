@@ -11,12 +11,14 @@ export class ClienteService {
 
   async listar(pagina: number, limite: number) {
     const pular = (pagina - 1) * limite;
-    return await prisma.cliente.findMany({ skip: pular, take: limite });
+    const dados = await prisma.cliente.findMany({ skip: pular, take: limite });
+    const total = await prisma.cliente.count();
+    return { dados, total, pagina, paginas: Math.ceil(total / limite) };
   }
 
   async buscarId(id: number) {
     const cliente = await prisma.cliente.findUnique({ where: { id } });
-    if (!cliente) throw new Error('Cliente não encontrado');
+    if (!cliente) throw new Error('404: Cliente não encontrado');
     return cliente;
   }
 

@@ -10,11 +10,13 @@ export class ProcedimentoService {
   }
   async listar(pagina: number, limite: number) {
     const pular = (pagina - 1) * limite;
-    return await prisma.procedimento.findMany({ skip: pular, take: limite });
+    const dados = await prisma.procedimento.findMany({ skip: pular, take: limite });
+    const total = await prisma.procedimento.count();
+    return { dados, total, pagina, paginas: Math.ceil(total / limite) };
   }
   async buscarId(id: number) {
     const proc = await prisma.procedimento.findUnique({ where: { id } });
-    if (!proc) throw new Error('Procedimento não encontrado');
+    if (!proc) throw new Error('404: Procedimento não encontrado');
     return proc;
   }
   async atualizar(id: number, dados: ProcedimentoUpdateDTO) {
