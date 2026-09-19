@@ -1,13 +1,13 @@
 import { createContext, useState, useEffect } from 'react';
 
-// Cria o contexto global
+
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
   const [logado, setLogado] = useState(false);
 
-  // Assim que o site carrega, verifica se o Matheus (ou outro utilizador) já tem sessão iniciada
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     const dadosUsuario = localStorage.getItem('usuario');
@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  // Função centralizada para iniciar sessão
+  
   const login = (token, dados) => {
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(dados));
@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
     setLogado(true);
   };
 
-  // Função centralizada para terminar sessão
+  
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');

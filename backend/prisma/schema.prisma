@@ -7,7 +7,7 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-// Tabela de Usuários (Para o Login exigido na rubrica)
+
 model Usuario {
   id    Int    @id @default(autoincrement())
   nome  String
@@ -16,7 +16,7 @@ model Usuario {
   cpf   String @unique
 }
 
-// CRUD 1: Clientes
+
 model Cliente {
   id           Int           @id @default(autoincrement())
   nome         String
@@ -25,17 +25,17 @@ model Cliente {
   agendamentos Agendamento[]
 }
 
-// CRUD 2: Procedimentos
+
 model Procedimento {
   id        Int      @id @default(autoincrement())
   nome      String
   descricao String?
   preco     Float
-  duracao   Int      // Duração em minutos
+  duracao   Int      
   agendamentos Agendamento[]
 }
 
-// CRUD 3: Agendamentos (Relacionamento obrigatório da rubrica)
+
 model Agendamento {
   id             Int          @id @default(autoincrement())
   dataHora       DateTime

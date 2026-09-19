@@ -15,7 +15,7 @@ function Cadastro() {
     e.preventDefault();
     setErro('');
 
-    // Verificação dupla de palavra-passe exigida na rubrica
+    
     if (senha !== confirmarSenha) {
       setErro('As palavras-passe não coincidem.');
       return;
@@ -32,9 +32,9 @@ function Cadastro() {
 
       if (resposta.ok) {
         alert('Conta criada com sucesso! Pode fazer o login.');
-        navigate('/'); // Redireciona para o login após o registo
+        navigate('/'); 
       } else {
-        // Lida com os erros da API de forma amigável
+        
         setErro(dados.erro || 'Erro ao criar conta. Verifique os dados.');
       }
     } catch (error) {

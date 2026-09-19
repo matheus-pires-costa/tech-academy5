@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function ProcedimentosLista() {
   const [procedimentos, setProcedimentos] = useState([]);
   const [pagina, setPagina] = useState(1);
-  const [totalPaginas, setTotalPaginas] = useState(1); // Novo estado
+  const [totalPaginas, setTotalPaginas] = useState(1); 
   const limite = 5;
   const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ function ProcedimentosLista() {
       });
       if (resposta.ok) {
         const resultado = await resposta.json();
-        setProcedimentos(resultado.dados); // Pegando o array de dentro do objeto
-        setTotalPaginas(resultado.paginas); // Guardando o total de páginas
+        setProcedimentos(resultado.dados); 
+        setTotalPaginas(resultado.paginas); 
       } else if (resposta.status === 401) {
         navigate('/');
       }

@@ -9,7 +9,7 @@ export class UsuarioController {
     try {
       const usuario = await service.cadastrar(req.body);
 
-      // Remove a senha criptografada do retorno por segurança
+      
       const { senha, ...usuarioSemSenha } = usuario;
 
       res.status(201).json(usuarioSemSenha);
@@ -20,7 +20,7 @@ export class UsuarioController {
 
   async atualizar(req: Request, res: Response): Promise<void> {
     try {
-      // Cria uma tipagem local rápida para extrair o ID do token sem usar "any"
+      
       const requisicaoAuth = req as Request & { usuarioId?: number };
       const idParametro = Number(req.params.id);
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function AgendamentosLista() {
   const [agendamentos, setAgendamentos] = useState([]);
   const [pagina, setPagina] = useState(1);
-  const [totalPaginas, setTotalPaginas] = useState(1); // Novo estado
+  const [totalPaginas, setTotalPaginas] = useState(1); 
   const limite = 5;
   const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ function AgendamentosLista() {
       });
       if (resposta.ok) {
         const resultado = await resposta.json();
-        setAgendamentos(resultado.dados); // Lendo o array de dentro do objeto
-        setTotalPaginas(resultado.paginas); // Lendo o total de páginas
+        setAgendamentos(resultado.dados); 
+        setTotalPaginas(resultado.paginas); 
       } else if (resposta.status === 401) {
         navigate('/');
       }
@@ -37,7 +37,7 @@ function AgendamentosLista() {
     carregarAgendamentos();
   };
 
-  // Função para deixar a data bonita na tela
+  
   const formatarData = (dataIso) => {
     const data = new Date(dataIso);
     return data.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
@@ -70,7 +70,7 @@ function AgendamentosLista() {
               {agendamentos.map(ag => (
                 <tr key={ag.id} className='align-middle'>
                   <td className="fw-bold">{formatarData(ag.dataHora)}</td>
-                  {/* O Prisma inclui os dados relacionados automaticamente! */}
+                  {}
                   <td>{ag.cliente?.nome || 'Cliente Removido'}</td>
                   <td>{ag.procedimento?.nome || 'Procedimento Removido'}</td>
                   <td>

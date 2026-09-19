@@ -1,8 +1,8 @@
-/// <reference types="jest" />
+
 import { UsuarioService } from './UsuarioService';
 import bcrypt from 'bcrypt';
 
-// "Fingimos" o Prisma para não sujar o banco de dados real
+
 jest.mock('@prisma/client', () => {
   const mPrismaClient = {
     usuario: {
@@ -13,7 +13,7 @@ jest.mock('@prisma/client', () => {
   return { PrismaClient: jest.fn(() => mPrismaClient) };
 });
 
-// "Fingimos" o bcrypt para o teste ser instantâneo
+
 jest.mock('bcrypt', () => ({
   hash: jest.fn().mockResolvedValue('senha_criptografada'),
 }));

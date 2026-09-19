@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = 'segredodaapiacademy'; // Chave secreta para o token
+const JWT_SECRET = 'segredodaapiacademy'; 
 
 export class AuthService {
   async autenticar(email: string, senhaPlana: string) {

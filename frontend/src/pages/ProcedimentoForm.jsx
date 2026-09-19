@@ -26,7 +26,7 @@ function ProcedimentoForm() {
     const url = procedimentoEmEdicao ? `http://localhost:3000/procedimentos/${procedimentoEmEdicao.id}` : 'http://localhost:3000/procedimentos';
     const metodo = procedimentoEmEdicao ? 'PUT' : 'POST';
 
-    // Converte os valores de string (do input) para números antes de enviar
+    
     const bodyData = { 
         nome, 
         descricao, 

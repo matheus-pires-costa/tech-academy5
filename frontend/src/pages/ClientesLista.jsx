@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 function ClientesLista() {
   const [clientes, setClientes] = useState([]);
   const [pagina, setPagina] = useState(1);
-  const [totalPaginas, setTotalPaginas] = useState(1); // Novo estado para saber quando bloquear o botão Próxima
-  const limite = 5; // Mostra 5 clientes por página
+  const [totalPaginas, setTotalPaginas] = useState(1); 
+  const limite = 5; 
   const navigate = useNavigate();
 
   useEffect(() => {
     carregarClientes();
-  }, [pagina]); // Recarrega sempre que a página mudar
+  }, [pagina]); 
 
   const carregarClientes = async () => {
     const token = localStorage.getItem('token');
@@ -20,8 +20,8 @@ function ClientesLista() {
       });
       if (resposta.ok) {
         const resultado = await resposta.json();
-        setClientes(resultado.dados); // AQUI: Agora pegamos o array de clientes de dentro do objeto
-        setTotalPaginas(resultado.paginas); // AQUI: Guardamos o total de páginas
+        setClientes(resultado.dados); 
+        setTotalPaginas(resultado.paginas); 
       } else if (resposta.status === 401) {
         navigate('/');
       }
@@ -34,7 +34,7 @@ function ClientesLista() {
     if (!window.confirm('Excluir este cliente?')) return;
     const token = localStorage.getItem('token');
     await fetch(`http://localhost:3000/clientes/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-    carregarClientes(); // Recarrega a lista após deletar
+    carregarClientes(); 
   };
 
   return (
@@ -68,7 +68,7 @@ function ClientesLista() {
           </table>
         )}
         
-        {/* Controles de Paginação ajustados para usar o totalPaginas */}
+        {}
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button className="btn btn-sm btn-outline-secondary" disabled={pagina === 1} onClick={() => setPagina(pagina - 1)}>
             ⬅️ Anterior

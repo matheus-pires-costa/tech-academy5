@@ -21,7 +21,7 @@ function AgendamentoForm() {
       setProcedimentoId(agendamentoEmEdicao.procedimentoId);
       setStatus(agendamentoEmEdicao.status);
       
-      // Ajusta a data para o formato exigido pelo input tipo "datetime-local" (YYYY-MM-DDThh:mm)
+      
       if (agendamentoEmEdicao.dataHora) {
         const dataFormatada = new Date(agendamentoEmEdicao.dataHora).toISOString().slice(0, 16);
         setDataHora(dataFormatada);
@@ -31,18 +31,18 @@ function AgendamentoForm() {
 
   const carregarListas = async () => {
     const token = localStorage.getItem('token');
-    // Trazemos um limite maior para preencher os selects
+    
     const resClientes = await fetch('http://localhost:3000/clientes?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
     const resProcedimentos = await fetch('http://localhost:3000/procedimentos?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
     
     if (resClientes.ok) {
       const resultadoClientes = await resClientes.json();
-      setClientes(resultadoClientes.dados); // AQUI: Lendo o array corretamente
+      setClientes(resultadoClientes.dados); 
     }
     
     if (resProcedimentos.ok) {
       const resultadoProced = await resProcedimentos.json();
-      setProcedimentos(resultadoProced.dados); // AQUI: Lendo o array corretamente
+      setProcedimentos(resultadoProced.dados); 
     }
   };
 

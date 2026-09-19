@@ -5,11 +5,11 @@ import { validarToken } from '../middlewares/authMiddleware';
 const router = Router();
 const clienteController = new ClienteController();
 
-// Repare no "validarToken": só quem fez login consegue acessar!
+
 router.post('/', validarToken, clienteController.criar.bind(clienteController));
 router.get('/', validarToken, clienteController.listar.bind(clienteController));
 
-// NOVA ROTA: PUT /clientes/:id
+
 router.put('/:id', validarToken, clienteController.atualizar.bind(clienteController));
 router.delete('/:id', validarToken, clienteController.deletar.bind(clienteController));
 

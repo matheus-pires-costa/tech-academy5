@@ -23,12 +23,12 @@ export class ClienteService {
   }
 
   async atualizar(id: number, dados: ClienteUpdateDTO) {
-    await this.buscarId(id); // Garante que o recurso existe
+    await this.buscarId(id); 
     return await prisma.cliente.update({ where: { id }, data: dados });
   }
 
   async deletar(id: number) {
-    await this.buscarId(id); // Garante que o recurso existe
+    await this.buscarId(id); 
     return await prisma.cliente.delete({ where: { id } });
   }
 }

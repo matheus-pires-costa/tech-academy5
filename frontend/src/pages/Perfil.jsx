@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 function Perfil() {
   const { usuario, login } = useContext(AuthContext);
 
-  // Puxa o nome e email do contexto global que criamos
+  
   const [nome, setNome] = useState(usuario?.nome || '');
   const [email] = useState(usuario?.email || ''); 
   const [cpf, setCpf] = useState(usuario?.cpf || '');
@@ -41,7 +41,7 @@ function Perfil() {
 
       if (resposta.ok) {
         setMensagem({ texto: 'Perfil atualizado com sucesso!', tipo: 'success' });
-        login(token, { ...usuario, nome, email, cpf }); // Atualiza o nome na barra superior
+        login(token, { ...usuario, nome, email, cpf }); 
         setSenha('');
         setConfirmarSenha('');
       } else {

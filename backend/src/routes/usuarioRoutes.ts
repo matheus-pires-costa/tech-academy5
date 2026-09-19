@@ -5,7 +5,7 @@ import { validarToken } from '../middlewares/authMiddleware';
 const router = Router();
 const controller = new UsuarioController();
 
-// POST /usuarios/cadastrar
+
 router.post('/cadastrar', controller.cadastrar.bind(controller));
 router.put('/:id', validarToken, controller.atualizar.bind(controller));
 

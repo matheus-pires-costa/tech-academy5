@@ -16,7 +16,7 @@ function Navbar() {
       <span className="navbar-brand fw-bold">CN Estética</span>
 
       <div className="d-flex ms-auto align-items-center">
-        {/* Aqui usamos o contexto global! */}
+        {}
         <span className="text-white me-4">Olá, <strong>{usuario?.nome || 'Admin'}</strong>!</span>
 
         <button className="btn btn-outline-light btn-sm me-4" onClick={() => navigate('/perfil')}>

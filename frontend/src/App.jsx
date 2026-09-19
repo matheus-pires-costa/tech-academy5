@@ -12,7 +12,7 @@ import Cadastro from './pages/Cadastro';
 import Perfil from './pages/Perfil';
 import { useState } from 'react';
 
-// O componente de rotas agora consome o contexto global
+
 function Rotas() {
   const { logado } = useContext(AuthContext);
 
@@ -51,7 +51,7 @@ function TelaLogin() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
-  const { login } = useContext(AuthContext); // Traz a função de login do contexto
+  const { login } = useContext(AuthContext); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ function TelaLogin() {
       });
       const dados = await resposta.json();
       if (resposta.ok) {
-        // Agora passamos o token e os dados do utilizador para o contexto global
+        
         login(dados.token, dados.usuario || { nome: 'Administrador' }); 
       } else {
         setErro(dados.erro || 'Credenciais inválidas');
@@ -96,7 +96,7 @@ function TelaLogin() {
   );
 }
 
-// O App principal apenas embrulha a aplicação no provedor de contexto
+
 export default function App() {
   return (
     <AuthProvider>

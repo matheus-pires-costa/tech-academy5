@@ -7,7 +7,7 @@ function ClienteForm() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Verifica se veio algum cliente pela rota (modo edição)
+  
   const clienteEmEdicao = location.state?.cliente;
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function ClienteForm() {
 
       if (resposta.ok) {
         alert('Salvo com sucesso!');
-        navigate('/clientes'); // Volta para a listagem
+        navigate('/clientes'); 
       } else {
         alert('Erro ao salvar.');
       }
