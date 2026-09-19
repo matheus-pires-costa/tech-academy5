@@ -9,6 +9,21 @@ export class ClienteService {
   }
 
   async listar() {
-    return await prisma.cliente.findMany(); // Traz todos os clientes
+    return await prisma.cliente.findMany();
+  }
+
+  // NOVO MÉTODO: ATUALIZAR CLIENTE
+  async atualizar(id: number, dados: { nome?: string; telefone?: string; endereco?: string }) {
+    if (!dados.nome && !dados.telefone && !dados.endereco) throw new Error('Dados para atualização não fornecidos');
+    return await prisma.cliente.update({
+      where: { id },
+      data: dados,
+    });
+  }
+
+  async deletar(id: number) {
+    return await prisma.cliente.delete({
+      where: { id },
+    });
   }
 }

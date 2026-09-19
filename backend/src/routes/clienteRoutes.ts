@@ -9,4 +9,8 @@ const clienteController = new ClienteController();
 router.post('/', validarToken, clienteController.criar.bind(clienteController));
 router.get('/', validarToken, clienteController.listar.bind(clienteController));
 
+// NOVA ROTA: PUT /clientes/:id
+router.put('/:id', validarToken, clienteController.atualizar.bind(clienteController));
+router.delete('/:id', validarToken, clienteController.deletar.bind(clienteController));
+
 export default router;

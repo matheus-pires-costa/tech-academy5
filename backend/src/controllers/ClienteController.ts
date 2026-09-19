@@ -18,4 +18,27 @@ export class ClienteController {
     const clientes = await clienteService.listar();
     res.status(200).json(clientes);
   }
+
+  // NOVO MÉTODO: CONTROLADOR DE ATUALIZAÇÃO
+  async atualizar(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params; // Pega o ID da URL
+      const clienteAtalizado = await clienteService.atualizar(Number(id), req.body);
+      res.status(200).json(clienteAtalizado);
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Erro ao atualizar cliente';
+      res.status(400).json({ erro: msg });
+    }
+  }
+
+  async deletar(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      await clienteService.deletar(Number(id));
+      res.status(204).send(); // 204 significa "Sucesso, sem conteúdo de retorno"
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Erro ao deletar cliente';
+      res.status(400).json({ erro: msg });
+    }
+  }
 }
