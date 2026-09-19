@@ -14,6 +14,10 @@ export class AuthService {
     if (!senhaValida) throw new Error('Credenciais inválidas');
 
     const token = jwt.sign({ id: usuario.id, email: usuario.email }, JWT_SECRET, { expiresIn: '1d' });
-    return { token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email } };
+    return {
+      mensagem: 'Login com sucesso',
+      token,
+      usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, cpf: usuario.cpf }
+    };
   }
 }

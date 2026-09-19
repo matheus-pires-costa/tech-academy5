@@ -9,6 +9,7 @@ import ProcedimentoForm from './pages/ProcedimentoForm';
 import AgendamentosLista from './pages/AgendamentosLista';
 import AgendamentoForm from './pages/AgendamentoForm';
 import Cadastro from './pages/Cadastro';
+import Perfil from './pages/Perfil';
 import { useState } from 'react';
 
 // O componente de rotas agora consome o contexto global
@@ -38,6 +39,7 @@ function Rotas() {
             <Route path="/agendamentos/novo" element={<AgendamentoForm />} />
             <Route path="/agendamentos/editar/:id" element={<AgendamentoForm />} />
             <Route path="/cadastro" element={<Navigate to="/clientes" />} />
+            <Route path="/perfil" element={<Perfil />} />
           </>
         )}
       </Routes>
