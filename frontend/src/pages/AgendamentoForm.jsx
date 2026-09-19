@@ -35,8 +35,15 @@ function AgendamentoForm() {
     const resClientes = await fetch('http://localhost:3000/clientes?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
     const resProcedimentos = await fetch('http://localhost:3000/procedimentos?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
     
-    if (resClientes.ok) setClientes(await resClientes.json());
-    if (resProcedimentos.ok) setProcedimentos(await resProcedimentos.json());
+    if (resClientes.ok) {
+      const resultadoClientes = await resClientes.json();
+      setClientes(resultadoClientes.dados); // AQUI: Lendo o array corretamente
+    }
+    
+    if (resProcedimentos.ok) {
+      const resultadoProced = await resProcedimentos.json();
+      setProcedimentos(resultadoProced.dados); // AQUI: Lendo o array corretamente
+    }
   };
 
   const handleSubmeter = async (e) => {
