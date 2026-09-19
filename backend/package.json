@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "prisma skills sync || exit 0",
     "start": "ts-node src/server.ts",
     "dev": "ts-node-dev src/server.ts",
     "test": "jest"
