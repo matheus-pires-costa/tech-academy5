@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Dashboard from './Dashboard';
 
 function App() {
+  const [logado, setLogado] = useState(false);
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
+
+  // Verifica se o usuário já tinha feito login antes ao abrir a página
+  useEffect(() => {
+    if (localStorage.getItem('token')) setLogado(true);
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,48 +22,43 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })
       });
-
       const dados = await resposta.json();
 
       if (resposta.ok) {
         localStorage.setItem('token', dados.token);
-        alert('Login efetuado com sucesso! (Em breve vamos redirecionar para o painel)');
-        // Aqui depois colocaremos o redirecionamento
+        setLogado(true); // Troca para a tela do Dashboard!
       } else {
-        setErro(dados.erro || 'Erro ao fazer login');
+        setErro(dados.erro || 'Credenciais inválidas');
       }
     } catch (error) {
-      setErro('Erro de conexão. O servidor backend está rodando?');
+      setErro('Erro de conexão com o servidor.');
     }
   };
 
-  return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
-      <h3 className="text-center mb-4">CN Estética e Bem-Estar</h3>
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setLogado(false); // Volta para a tela de login
+  };
+
+  if (logado) {
+    return <Dashboard onLogout={handleLogout} />;
+  }
+
+return (
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4 shadow card-estetica" style={{ width: '100%', maxWidth: '400px', backgroundColor: 'white' }}>
+        <h3 className="text-center mb-4 text-cn-roxo fw-bold">CN Estética e Bem-Estar</h3>
         <form onSubmit={handleLogin}>
           <div className="mb-3">
-            <label className="form-label">E-mail</label>
-            <input 
-              type="email" 
-              className="form-control" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
-            />
+            <label className="form-label text-cn-roxo fw-semibold">E-mail</label>
+            <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="mb-3">
-            <label className="form-label">Senha</label>
-            <input 
-              type="password" 
-              className="form-control" 
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required 
-            />
+            <label className="form-label text-cn-roxo fw-semibold">Senha</label>
+            <input type="password" className="form-control" value={senha} onChange={(e) => setSenha(e.target.value)} required />
           </div>
           {erro && <div className="alert alert-danger p-2 text-center">{erro}</div>}
-          <button type="submit" className="btn btn-primary w-100">Entrar</button>
+          <button type="submit" className="btn btn-cn-dourado w-100 mt-2">Entrar no Sistema</button>
         </form>
       </div>
     </div>
