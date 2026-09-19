@@ -15,7 +15,7 @@ function AgendamentosLista() {
   const carregarAgendamentos = async () => {
     const token = localStorage.getItem('token');
     try {
-      const resposta = await fetch(`http://localhost:3000/agendamentos?pagina=${pagina}&limite=${limite}`, {
+      const resposta = await fetch(`https://cn-estetica-api.onrender.com/agendamentos?pagina=${pagina}&limite=${limite}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (resposta.ok) {
@@ -33,7 +33,7 @@ function AgendamentosLista() {
   const handleDeletar = async (id) => {
     if (!window.confirm('Excluir este agendamento?')) return;
     const token = localStorage.getItem('token');
-    await fetch(`http://localhost:3000/agendamentos/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+    await fetch(`https://cn-estetica-api.onrender.com/agendamentos/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
     carregarAgendamentos();
   };
 

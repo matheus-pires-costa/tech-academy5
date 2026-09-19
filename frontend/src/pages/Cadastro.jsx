@@ -22,7 +22,7 @@ function Cadastro() {
     }
 
     try {
-      const resposta = await fetch('http://localhost:3000/usuarios/cadastrar', {
+      const resposta = await fetch('https://cn-estetica-api.onrender.com/usuarios/cadastrar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, email, cpf, senha })

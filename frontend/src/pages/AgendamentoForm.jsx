@@ -32,8 +32,8 @@ function AgendamentoForm() {
   const carregarListas = async () => {
     const token = localStorage.getItem('token');
     
-    const resClientes = await fetch('http://localhost:3000/clientes?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
-    const resProcedimentos = await fetch('http://localhost:3000/procedimentos?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
+    const resClientes = await fetch('https://cn-estetica-api.onrender.com/clientes?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
+    const resProcedimentos = await fetch('https://cn-estetica-api.onrender.com/procedimentos?limite=100', { headers: { 'Authorization': `Bearer ${token}` } });
     
     if (resClientes.ok) {
       const resultadoClientes = await resClientes.json();
@@ -49,7 +49,7 @@ function AgendamentoForm() {
   const handleSubmeter = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    const url = agendamentoEmEdicao ? `http://localhost:3000/agendamentos/${agendamentoEmEdicao.id}` : 'http://localhost:3000/agendamentos';
+    const url = agendamentoEmEdicao ? `https://cn-estetica-api.onrender.com/agendamentos/${agendamentoEmEdicao.id}` : 'https://cn-estetica-api.onrender.com/agendamentos';
     const metodo = agendamentoEmEdicao ? 'PUT' : 'POST';
 
     const bodyData = { 
